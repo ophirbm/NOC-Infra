@@ -1,0 +1,9 @@
+{
+  "settings": {
+    "soundEnabled": false
+  },
+  "targets": [
+    "FCSW",
+    "DSW"
+  ]
+}
