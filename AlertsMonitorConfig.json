@@ -4,6 +4,6 @@
   },
   "targets": [
     "FCSW",
-    "IAD-DSW"
+    "DSW"
   ]
 }
