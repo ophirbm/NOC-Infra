@@ -262,8 +262,6 @@ document.head.appendChild(style);
     }
 
     function scanAllNodes() {
-        let team = document.getElementById("customer-picker-text")?.innerText || "Infra-NOC";
-    console.log("You are connected as "+team);
         const nodes = document.querySelectorAll(".q-tree__node");
 
         const newMatches = new Map();
