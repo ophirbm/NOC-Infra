@@ -4,6 +4,7 @@
   },
   "targets": [
     "FCSW",
-    "DSW"
+    "DSW",
+    "alcon"
   ]
 }
