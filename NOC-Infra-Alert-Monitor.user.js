@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         NOC Infra Alert Monitor Script
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @match        https://app.xiteit.co/*
 // @run-at       document-idle
 // @description
