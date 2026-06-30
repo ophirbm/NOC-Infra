@@ -7,6 +7,8 @@
 // @description
 // @grant        GM_xmlhttpRequest
 // @connect      github.com
+// @updateURL    https://raw.githubusercontent.com/ophirbm/NOC-Infra/main/NOC-Infra-Alert-Monitor.user.js
+// @downloadURL  https://raw.githubusercontent.com/ophirbm/NOC-Infra/main/NOC-Infra-Alert-Monitor.user.js
 // ==/UserScript==
 
 (function () {
@@ -126,14 +128,19 @@ document.head.appendChild(style);
     }
     function getAlertKey(node, target) {
         const text = normalizeText(node.textContent || "");
-        return `${target}|${text}`;
+        const columns = node.querySelectorAll(".event-container .column");
+        const hostText = columns[0]?.textContent.trim() || "";
+        //return `${target}|${text}`;
+        return `${target}|${hostText}`;
     }
 
     function checkNode(node, newMatches) {
+
         const text = normalizeText(node.textContent) || "";
 
         for (let i = 0; i < targetStrings.length; i++) {
             if (text.includes(targetStrings[i])) {
+                node.classList.add("tm-alert-node");
                 const key = getAlertKey(node, targetStrings[i]);
                 if (dismissedAlerts.has(key)) {
                     return;
@@ -141,18 +148,21 @@ document.head.appendChild(style);
                 if (soundEnabled){
                     beep();
                 }
+                const columns =
+                      node.querySelectorAll(".event-container .column");
+
+                const hostText =
+                      columns[0]?.textContent.trim() || "";
                 newMatches.set(key, {
                     key,
                     target: targetStrings[i],
-                    text: text
+                    text: hostText
                 });
-
-                node.classList.add("tm-alert-node");
                 return;
             }
         }
 
-        node.classList.remove("tm-alert-node");
+        //node.classList.remove("tm-alert-node");
     }
 
     // -----------------------------
@@ -262,7 +272,7 @@ document.head.appendChild(style);
     }
 
     function scanAllNodes() {
-        const nodes = document.querySelectorAll(".q-tree__node");
+        const nodes = document.querySelectorAll(".q-tree__node--child");
 
         const newMatches = new Map();
 
@@ -279,7 +289,7 @@ document.head.appendChild(style);
     // BOOTSTRAP (wait for tree)
     // -----------------------------
     function boot() {
-        const nodes = document.querySelectorAll(".q-tree__node");
+        const nodes = document.querySelectorAll(".q-tree__node--child");
 
         if (nodes.length === 0) {
             setTimeout(boot, 500);
